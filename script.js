@@ -24,12 +24,6 @@ const CONFIG = {
       message: "Happy Birthday Zakwan! May Allah bless you with happiness, good health and success."
     },
     {
-      name: "Abbu",
-      avatar: "🌟",
-      stamp: "⭐",
-      message: "Keep smiling, keep learning and always stay amazing!"
-    },
-    {
       name: "Family",
       avatar: "💖",
       stamp: "🎉",
