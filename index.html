@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Zakwan's Big Birthday Blast! 💨🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Fullscreen Particle / Confetti Canvas -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Floating Background Elements -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="cloud-float c1">☁️</div>
+    <div class="cloud-float c2">☁️</div>
+    <div class="cloud-float c3">☁️</div>
+    <div class="balloon-float b1">🎈</div>
+    <div class="balloon-float b2">🎈</div>
+    <div class="balloon-float b3">🎈</div>
+    <div class="bubble-float bb1"></div>
+    <div class="bubble-float bb2"></div>
+    <div class="bubble-float bb3"></div>
+    <div class="star-float s1">✨</div>
+    <div class="star-float s2">⭐</div>
+  </div>
+
+  <!-- Persistent Global Audio & Utility Controls -->
+  <header class="top-bar" id="top-bar">
+    <div class="logo-badge">🎂 Zakwan's 9th!</div>
+    <div class="top-controls">
+      <button id="sound-toggle-btn" class="ctrl-btn" title="Toggle Sound Effects" aria-label="Toggle Sound">
+        <span class="btn-icon">🔊</span>
+        <span class="btn-label">Sound ON</span>
+      </button>
+      <button id="music-toggle-btn" class="ctrl-btn" title="Toggle Birthday Music" aria-label="Toggle Music">
+        <span class="btn-icon">🎵</span>
+        <span class="btn-label">Music OFF</span>
+      </button>
+      <button id="replay-btn" class="ctrl-btn hidden" title="Replay Opening Surprise" aria-label="Replay Opening">
+        <span class="btn-icon">🔁</span>
+        <span class="btn-label">Replay</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- SCREEN 0: PASSWORD PROTECTION GATE                       -->
+  <!-- ======================================================== -->
+  <section id="password-screen" class="app-screen active">
+    <div class="card pass-card">
+      <div class="lock-icon-bounce">🔐</div>
+      <h1 class="pass-title">VIP BIRTHDAY ACCESS</h1>
+      <p class="pass-desc">Only VIPs, family & Birthday Champions can enter Zakwan's party!</p>
+      
+      <div class="pin-display-wrap">
+        <div class="pin-dots" id="pin-dots">
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+        </div>
+        <input type="password" id="password-input" class="visually-hidden" inputmode="numeric" maxlength="9" placeholder="Enter PIN">
+      </div>
+
+      <div id="password-error" class="pass-error" aria-live="polite"></div>
+
+      <!-- Touch-friendly Kid Numpad -->
+      <div class="numpad-grid" id="numpad">
+        <button type="button" class="num-key" data-key="1">1</button>
+        <button type="button" class="num-key" data-key="2">2</button>
+        <button type="button" class="num-key" data-key="3">3</button>
+        <button type="button" class="num-key" data-key="4">4</button>
+        <button type="button" class="num-key" data-key="5">5</button>
+        <button type="button" class="num-key" data-key="6">6</button>
+        <button type="button" class="num-key" data-key="7">7</button>
+        <button type="button" class="num-key" data-key="8">8</button>
+        <button type="button" class="num-key" data-key="9">9</button>
+        <button type="button" class="num-key fn-key clear-key" data-key="clear" title="Clear">✖</button>
+        <button type="button" class="num-key" data-key="0">0</button>
+        <button type="button" class="num-key fn-key enter-key" data-key="enter" title="Unlock">GO 🚀</button>
+      </div>
+
+      <div class="pass-footer">
+        <button type="button" id="hint-toggle-btn" class="hint-btn">💡 Need a hint?</button>
+        <div id="hint-box" class="hint-text hidden">Psst! The secret code is <strong>123456789</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- SCREEN 1: THE MYSTERY OPENING                            -->
+  <!-- ======================================================== -->
+  <section id="mystery-screen" class="app-screen">
+    <div class="mystery-wrapper">
+      <div class="mystery-badge">TOP SECRET MISSION</div>
+      
+      <div class="cloud-hero-stage">
+        <div class="puff-cloud-character" id="mystery-cloud">
+          <div class="cloud-body">
+            <div class="cloud-face">
+              <span class="cloud-eye left">👀</span>
+              <span class="cloud-mouth">😮</span>
+            </div>
+            <div class="cloud-cheeks">
+              <span class="cheek c-left"></span>
+              <span class="cheek c-right"></span>
+            </div>
+          </div>
+          <div class="tiny-puff-ring p1">*pfft...*</div>
+          <div class="tiny-puff-ring p2">*pfft!*</div>
+        </div>
+      </div>
+
+      <h1 class="mystery-heading">🤔 WAIT... WHAT WAS THAT?</h1>
+      <p class="mystery-subheading">"Something BIG is coming..."</p>
+
+      <button id="start-surprise-btn" class="btn-giant-bounce">
+        <span class="btn-glow"></span>
+        <span class="btn-text">TAP TO START THE SURPRISE 💨</span>
+      </button>
+
+      <div class="mystery-tip">Turn your volume up for the full cartoon blast! 🔊</div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- SCREEN 2: THE BIG AIR BLAST REVEAL OVERLAY               -->
+  <!-- ======================================================== -->
+  <div id="reveal-overlay" class="overlay-fullscreen">
+    <!-- Shaking Scene Container -->
+    <div id="reveal-scene" class="reveal-content">
+      <!-- Expanding Mega Cloud -->
+      <div id="mega-cloud" class="mega-cloud-anim">
+        <div class="mega-cloud-bubble b-main">
+          <div class="mega-face">
+            <span class="mega-eye">😲</span>
+            <span class="mega-eye">😲</span>
+            <div class="mega-mouth-puff">💨</div>
+          </div>
+        </div>
+        <div class="blast-ring r1"></div>
+        <div class="blast-ring r2"></div>
+        <div class="blast-ring r3"></div>
+      </div>
+
+      <!-- Comic Countdown Display -->
+      <div id="countdown-banner" class="countdown-display hidden">
+        <span id="countdown-number">3</span>
+      </div>
+
+      <!-- Comic Blast Text -->
+      <div id="blast-text-pfft" class="comic-blast-banner hidden">
+        <div class="sound-bubble">PFFFFFFT!</div>
+      </div>
+
+      <div id="blast-text-boom" class="comic-blast-banner hidden">
+        <div class="sound-bubble boom">BOOOOOOM! 💨</div>
+      </div>
+
+      <!-- The Grand Reveal Card -->
+      <div id="reveal-card" class="reveal-card hidden">
+        <div class="confetti-crown">👑</div>
+        <h1 class="reveal-title">🎉 HAPPY BIRTHDAY ZAKWAN! 🎉</h1>
+        <div class="level-badge">💨 LEVEL 9 UNLOCKED! 💨</div>
+        <p class="reveal-subtitle">"Today is YOUR day. Let's make some noise!"</p>
+        
+        <div class="reveal-actions">
+          <button id="enter-party-btn" class="btn-giant-bounce">
+            <span class="btn-text">EXPLORE THE CELEBRATION! 🎂✨</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- SCREEN 3: MAIN BIRTHDAY DASHBOARD                        -->
+  <!-- ======================================================== -->
+  <main id="main-dashboard" class="app-screen">
+    <!-- Hero Header -->
+    <section class="dashboard-hero">
+      <div class="hero-badge">🌟 OFFICIAL BIRTHDAY HEADQUARTERS 🌟</div>
+      <h1 class="dashboard-title">
+        <span class="cake-emoji">🎂</span> IT'S ZAKWAN'S DAY!
+      </h1>
+      <p class="dashboard-subtitle">"Officially 9 years of awesomeness!"</p>
+
+      <!-- Quick Jump Navigation -->
+      <nav class="quick-nav" aria-label="Celebration Attractions">
+        <a href="#cake-section" class="nav-chip">🎂 Cake</a>
+        <a href="#puff-attack-section" class="nav-chip">💨 Puff Attack</a>
+        <a href="#balloon-pop-section" class="nav-chip">🎈 Balloon Pop</a>
+        <a href="#mystery-gift-section" class="nav-chip">🎁 Mystery Gift</a>
+        <a href="#profile-section" class="nav-chip">👑 Zakwan's Stats</a>
+        <a href="#wishes-section" class="nav-chip">💌 Family Wishes</a>
+        <a href="#finale-section" class="nav-chip special">🎆 Grand Finale</a>
+      </nav>
+    </section>
+
+    <!-- SECTION: THE GIANT BIRTHDAY CAKE -->
+    <section id="cake-section" class="content-section">
+      <div class="section-card cake-card">
+        <div class="card-header">
+          <span class="pill-tag">INTERACTIVE ATTRACTION</span>
+          <h2 class="section-title">🎂 THE GIANT 9-CANDLE CAKE</h2>
+          <p class="section-subtitle">Make a special wish for your 9th year and blow out the candles!</p>
+        </div>
+
+        <div class="cake-display-stage">
+          <!-- 3-Tier Cartoon Cake -->
+          <div class="cake-container" id="cake-container">
+            <!-- 9 Candles Container -->
+            <div class="candles-row" id="candles-row">
+              <div class="candle" data-candle="1"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-blue"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="2"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-pink"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="3"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-yellow"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="4"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-green"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="5"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-purple"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="6"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-orange"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="7"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-cyan"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="8"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-red"></div><div class="smoke"></div></div>
+              <div class="candle" data-candle="9"><div class="flame lit"></div><div class="wick"></div><div class="candle-body c-gold"></div><div class="smoke"></div></div>
+            </div>
+
+            <!-- Cake Tiers -->
+            <div class="cake-tier tier-top">
+              <div class="tier-frosting"></div>
+              <div class="tier-toppings">🍓 🍒 🍫 🍓</div>
+            </div>
+            <div class="cake-tier tier-mid">
+              <div class="tier-frosting"></div>
+              <div class="tier-stripes"></div>
+            </div>
+            <div class="cake-tier tier-bottom">
+              <div class="tier-frosting"></div>
+              <div class="cake-plate">
+                <span class="plate-text">★ ZAKWAN IS 9 ★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cake-controls">
+          <button id="blow-candles-btn" class="btn-action pulse">
+            <span class="btn-icon">💨</span>
+            <span class="btn-text">BLOW OUT THE CANDLES!</span>
+          </button>
+          <button id="relight-candles-btn" class="btn-secondary hidden">
+            <span class="btn-icon">🔥</span>
+            <span class="btn-text">Relight Candles</span>
+          </button>
+        </div>
+
+        <!-- Wish Message Reveal -->
+        <div id="cake-wish-banner" class="wish-banner hidden">
+          <div class="wish-icon">🌟</div>
+          <h3 class="wish-title">🎂 MAKE A WISH, ZAKWAN!</h3>
+          <p class="wish-text">"May all your beautiful wishes come true and your year be filled with smiles, joy, and adventures!"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: PUFF ATTACK MINI-GAME -->
+    <section id="puff-attack-section" class="content-section">
+      <div class="section-card game-card">
+        <div class="card-header">
+          <span class="pill-tag game-tag">MINI-GAME 1</span>
+          <h2 class="section-title">💨 PUFF ATTACK!</h2>
+          <p class="section-subtitle">Cheeky cartoon clouds are popping in! Tap 9 puffs before they vanish!</p>
+        </div>
+
+        <div class="game-hud">
+          <div class="hud-item score-hud">
+            <span class="hud-label">Puffs Caught:</span>
+            <span class="hud-val" id="puff-score">0</span>
+            <span class="hud-target">/ 9</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-fill" id="puff-progress-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Puff Arena -->
+        <div class="game-arena" id="puff-arena">
+          <div class="arena-placeholder" id="puff-start-wrap">
+            <div class="arena-icon-bounce">☁️💨</div>
+            <p>Ready to test your reflexes?</p>
+            <button id="start-puff-game-btn" class="btn-action">
+              <span>START PUFF ATTACK! 💨</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Victory Banner -->
+        <div id="puff-victory-banner" class="victory-box hidden">
+          <div class="trophy-bounce">🏆</div>
+          <h3 class="victory-title">PUFF MASTER UNLOCKED!</h3>
+          <p class="victory-desc">Incredible reflexes, Zakwan! You caught all 9 cartoon puffs like a ninja!</p>
+          <button id="replay-puff-game-btn" class="btn-secondary">Play Again 🔁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: BALLOON POP CHALLENGE -->
+    <section id="balloon-pop-section" class="content-section">
+      <div class="section-card game-card">
+        <div class="card-header">
+          <span class="pill-tag game-tag">MINI-GAME 2</span>
+          <h2 class="section-title">🎈 POP THE BIRTHDAY BALLOONS!</h2>
+          <p class="section-subtitle">Colourful party balloons are floating up! Tap 9 balloons to pop them into confetti!</p>
+        </div>
+
+        <div class="game-hud">
+          <div class="hud-item score-hud">
+            <span class="hud-label">Balloons Popped:</span>
+            <span class="hud-val" id="balloon-score">0</span>
+            <span class="hud-target">/ 9</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-fill balloon-fill" id="balloon-progress-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Balloon Arena -->
+        <div class="game-arena balloon-arena" id="balloon-arena">
+          <div class="arena-placeholder" id="balloon-start-wrap">
+            <div class="arena-icon-bounce">🎈✨</div>
+            <p>Catch the floating party balloons!</p>
+            <button id="start-balloon-game-btn" class="btn-action">
+              <span>START POPPING! 🎈</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Victory Banner -->
+        <div id="balloon-victory-banner" class="victory-box hidden">
+          <div class="trophy-bounce">🎉</div>
+          <h3 class="victory-title">AMAZING, ZAKWAN!</h3>
+          <p class="victory-desc">You're officially the birthday champion! Balloon master status achieved!</p>
+          <button id="replay-balloon-game-btn" class="btn-secondary">Pop More Balloons 🔁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE MYSTERY GIFT -->
+    <section id="mystery-gift-section" class="content-section">
+      <div class="section-card gift-card">
+        <div class="card-header">
+          <span class="pill-tag">SPECIAL SURPRISE</span>
+          <h2 class="section-title">🎁 THE MYSTERY GIFT</h2>
+          <p class="section-subtitle">A special package delivered just for Birthday Boy Zakwan!</p>
+        </div>
+
+        <div class="gift-stage">
+          <div class="present-box" id="present-box">
+            <div class="present-lid" id="present-lid">
+              <div class="ribbon-bow">🎀</div>
+              <div class="lid-top"></div>
+            </div>
+            <div class="present-body" id="present-body">
+              <div class="ribbon-v"></div>
+              <div class="ribbon-h"></div>
+              <div class="tag-badge">TO: ZAKWAN (AGE 9) 🏷️</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gift-actions">
+          <button id="open-gift-btn" class="btn-giant-bounce">
+            <span class="btn-text">OPEN YOUR GIFT! 🎁</span>
+          </button>
+        </div>
+
+        <!-- Revealed Family Message -->
+        <div id="gift-reveal-box" class="gift-reveal hidden">
+          <div class="heart-pulse">❤️</div>
+          <h3 class="gift-reveal-title">YOUR BIGGEST GIFT IS YOUR FAMILY!</h3>
+          <p class="gift-reveal-message">
+            "All of us are cheering for you today, Zakwan! We love your bright smile, your kind heart, and the joy you bring to every single day. Always remember how deeply loved and cherished you are!"
+          </p>
+          <div class="gift-sparkles">💖 ✨ 🌟 🎈 🎂</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ZAKWAN'S FUN PROFILE -->
+    <section id="profile-section" class="content-section">
+      <div class="section-card profile-card">
+        <div class="profile-header-banner">
+          <span class="game-rank-badge">👑 LEVEL 9 MASTER</span>
+          <h2 class="profile-headline">PLAYER PROFILE</h2>
+          <p class="profile-sub">OFFICIAL BIRTHDAY CHAMPION STATS</p>
+        </div>
+
+        <div class="profile-main-grid">
+          <!-- Avatar Card -->
+          <div class="profile-avatar-box">
+            <div class="avatar-ring">
+              <div class="avatar-icon">👑</div>
+            </div>
+            <h3 class="player-name">ZAKWAN</h3>
+            <div class="player-stat-pill">AGE: 9 YEARS</div>
+            <div class="player-title">STATUS: BIRTHDAY CHAMPION</div>
+          </div>
+
+          <!-- Video-Game Stats List -->
+          <div class="profile-stats-list">
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">💖 Happiness</span>
+                <span class="stat-value">100%</span>
+              </div>
+              <div class="stat-meter"><div class="stat-fill" style="width: 100%;"></div></div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">⚡ Energy</span>
+                <span class="stat-value">MAX</span>
+              </div>
+              <div class="stat-meter"><div class="stat-fill fill-energy" style="width: 100%;"></div></div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">🚀 Fun Level</span>
+                <span class="stat-value">999</span>
+              </div>
+              <div class="stat-meter"><div class="stat-fill fill-fun" style="width: 100%;"></div></div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">😊 Smile Power</span>
+                <span class="stat-value">∞</span>
+              </div>
+              <div class="stat-meter"><div class="stat-fill fill-smile" style="width: 100%;"></div></div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">🌟 Birthday Power</span>
+                <span class="stat-value">UNLIMITED</span>
+              </div>
+              <div class="stat-meter"><div class="stat-fill fill-birthday" style="width: 100%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievement Badges -->
+        <div class="badges-title">🏅 UNLOCKED BIRTHDAY BADGES</div>
+        <div class="badges-grid">
+          <div class="badge-item">
+            <span class="badge-icon">🍰</span>
+            <span class="badge-name">Cake Destroyer</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">💨</span>
+            <span class="badge-name">Cloud Commander</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🎈</span>
+            <span class="badge-name">Balloon Buster</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">⭐</span>
+            <span class="badge-name">9-Year Legend</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FAMILY WISHES -->
+    <section id="wishes-section" class="content-section">
+      <div class="section-card wishes-card">
+        <div class="card-header">
+          <span class="pill-tag love-tag">FROM THE HEART ❤️</span>
+          <h2 class="section-title">💌 MESSAGES FROM YOUR FAVOURITE PEOPLE</h2>
+          <p class="section-subtitle">Tap each special envelope to read your family's warm birthday wishes!</p>
+        </div>
+
+        <div class="envelopes-grid" id="family-wishes-container">
+          <!-- Injected dynamically from CONFIG.familyWishes -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: GRAND FINALE LAUNCHER -->
+    <section id="finale-section" class="content-section">
+      <div class="section-card finale-card">
+        <div class="card-header">
+          <span class="pill-tag finale-tag">THE CLIMAX 🚀</span>
+          <h2 class="section-title">💥 READY FOR THE BIGGEST BLAST EVER?</h2>
+          <p class="section-subtitle">Hold on to your party hats! We saved the most spectacular celebration for the grand finale!</p>
+        </div>
+
+        <div class="finale-preview-art">
+          <div class="firework-icon">🎆</div>
+          <div class="mega-blast-icon">💨</div>
+          <div class="party-popper-icon">🎉</div>
+        </div>
+
+        <button id="launch-finale-btn" class="btn-giant-bounce blast-glow">
+          <span class="btn-text">TRIGGER THE BIGGEST BLAST EVER! 🚀💥</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <p>Made with all the love in the universe for Zakwan on his 9th Birthday! ❤️🎉</p>
+      <p class="footer-sub">Born 3 October 2017 • Celebrating 9 Amazing Years</p>
+    </footer>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- SCREEN 4: GRAND FINALE FULLSCREEN MODAL                  -->
+  <!-- ======================================================== -->
+  <div id="grand-finale-modal" class="finale-modal-fullscreen">
+    <div class="finale-spotlight" id="finale-spotlight"></div>
+    <div class="carnival-lights" id="carnival-lights">
+      <span class="c-bulb"></span><span class="c-bulb"></span><span class="c-bulb"></span>
+      <span class="c-bulb"></span><span class="c-bulb"></span><span class="c-bulb"></span>
+      <span class="c-bulb"></span><span class="c-bulb"></span><span class="c-bulb"></span>
+    </div>
+
+    <div class="finale-content" id="finale-content">
+      <!-- Finale Countdown -->
+      <div id="finale-countdown" class="finale-countdown-box">
+        <div class="finale-cloud-bounce">☁️💨</div>
+        <div class="finale-count-text" id="finale-count-text">3</div>
+      </div>
+
+      <!-- Finale Big Blast Burst -->
+      <div id="finale-blast-banner" class="finale-blast-banner hidden">
+        <div class="mega-sound-text">BOOOOOOM! 💨🎉</div>
+      </div>
+
+      <!-- Final Celebration Display -->
+      <div id="finale-reveal-message" class="finale-reveal-card hidden">
+        <div class="grand-crown">👑</div>
+        <h1 class="grand-heading">🎉 HAPPY 9TH BIRTHDAY ZAKWAN! 🎉</h1>
+        <h2 class="grand-subheading">"9 YEARS OF SMILES, FUN AND ADVENTURES!"</h2>
+        <div class="grand-love">❤️ WE LOVE YOU, ZAKWAN! ❤️</div>
+        <p class="grand-closing">"Keep laughing. Keep shining. Keep being awesome!"</p>
+
+        <div class="finale-btn-group">
+          <button id="replay-finale-btn" class="btn-secondary">Replay Grand Finale 🎆</button>
+          <button id="close-finale-btn" class="btn-action">Back to Party 🎈</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
