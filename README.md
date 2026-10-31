@@ -25,7 +25,7 @@ Open `script.js` to modify any details inside the `CONFIG` object:
 ```javascript
 const CONFIG = {
   name: "Zakwan",
-  birthDate: "2017-10-03",
+  birthDate: "2017-10-31",
   birthdayAge: 9,
   password: "123456789", // Change the entry code here
   birthdayMessage: "Happy Birthday Zakwan!",

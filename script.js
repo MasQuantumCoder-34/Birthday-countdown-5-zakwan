@@ -9,7 +9,7 @@
 // ========================================================
 const CONFIG = {
   name: "Zakwan",
-  birthDate: "2017-10-03",
+  birthDate: "2017-10-31",
   birthdayAge: 9,
   password: "123456789", // Secret birthday PIN
   birthdayMessage: "Happy Birthday Zakwan!",
@@ -547,8 +547,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pinDots = document.querySelectorAll(".pin-dot");
   const passwordError = document.getElementById("password-error");
   const numpad = document.getElementById("numpad");
-  const hintToggleBtn = document.getElementById("hint-toggle-btn");
-  const hintBox = document.getElementById("hint-box");
   const passCard = document.querySelector(".pass-card");
 
   function updatePinDots() {
@@ -638,12 +636,6 @@ document.addEventListener("DOMContentLoaded", () => {
       sound.click();
       checkPassword();
     }
-  });
-
-  hintToggleBtn.addEventListener("click", () => {
-    sound.init();
-    sound.click();
-    hintBox.classList.toggle("hidden");
   });
 
   // ========================================================
