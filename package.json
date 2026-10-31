@@ -1,0 +1,12 @@
+{
+  "name": "zakwans-birthday-blast",
+  "version": "1.0.0",
+  "description": "Zakwan's 9th Birthday Interactive Animated Celebration Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["birthday", "interactive", "animation"],
+  "author": "",
+  "license": "MIT"
+}
